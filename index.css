@@ -1916,9 +1916,14 @@ body.dark-theme .modal-backdrop {
         margin: 0;
     }
 
+    * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
     body {
-        background: #ffffff !important;
-        color: #0f172a !important;
+        background: var(--bg-dark-primary) !important;
+        color: var(--text-primary) !important;
         overflow: visible !important;
         height: auto !important;
         width: auto !important;
@@ -1938,12 +1943,13 @@ body.dark-theme .modal-backdrop {
     .remove-item-btn,
     .demo-panel.control-panel,
     .output-tabs,
-    .canvas-grid-bg {
+    .canvas-grid-bg,
+    .theme-toggle-btn {
         display: none !important;
     }
 
     .presentation-workspace {
-        background: #ffffff !important;
+        background: transparent !important;
         overflow: visible !important;
     }
 
@@ -1965,217 +1971,20 @@ body.dark-theme .modal-backdrop {
         height: 210mm !important;
         padding: 20mm !important;
         page-break-after: always !important;
-        background: #ffffff !important;
-        color: #0f172a !important;
-        border-bottom: 1px solid #cbd5e1;
         box-sizing: border-box !important;
+        background: var(--bg-dark-primary) !important;
+        color: var(--text-primary) !important;
+        border-bottom: 1px solid var(--border-color) !important;
     }
 
     .slide-background-glow {
-        display: none !important;
+        display: block !important;
     }
 
     .slide-content {
         max-height: none !important;
         max-width: none !important;
         height: 100% !important;
-        color: #0f172a !important;
-    }
-
-    .slide-header h2 {
-        background: none !important;
-        color: #0b2c5a !important;
-        font-size: 24pt !important;
-    }
-
-    .slide-number {
-        color: #0284c7 !important;
-        border-color: #cbd5e1 !important;
-        background: #f1f5f9 !important;
-    }
-
-    .glow-text {
-        background: none !important;
-        color: #0b2c5a !important;
-        text-shadow: none !important;
-    }
-
-    .cover-slide h1 {
-        font-size: 30pt !important;
-        color: #0b2c5a !important;
-    }
-
-    .cover-slide .subtitle {
-        color: #334155 !important;
-        font-size: 14pt !important;
-    }
-
-    .lead-text {
-        color: #1e293b !important;
-        font-size: 13pt !important;
-    }
-
-    .feature-bullets li {
-        color: #334155 !important;
-        font-size: 11pt !important;
-    }
-
-    .feature-bullets li strong {
-        color: #0f172a !important;
-    }
-
-    .bullet-icon {
-        background: #f1f5f9 !important;
-        border: 1px solid #cbd5e1 !important;
-        color: #0284c7 !important;
-        box-shadow: none !important;
-    }
-
-    .glass {
-        background: #ffffff !important;
-        border: 1px solid #cbd5e1 !important;
-        box-shadow: none !important;
-        color: #0f172a !important;
-    }
-
-    .cover-footer {
-        border-top-color: #cbd5e1 !important;
-    }
-
-    .course-name {
-        color: #0b2c5a !important;
-    }
-
-    .members-list li {
-        color: #334155 !important;
-        background: #f1f5f9 !important;
-        border-color: #cbd5e1 !important;
-    }
-
-    .members-list li i {
-        color: #0284c7 !important;
-    }
-
-    .card-mockup-body {
-        background: #f1f5f9 !important;
-    }
-
-    .tree-node {
-        color: #475569 !important;
-    }
-
-    .tree-node.active {
-        background: #e0f2fe !important;
-        color: #0284c7 !important;
-    }
-
-    .uml-class-box {
-        border-color: #0284c7 !important;
-        background: #ffffff !important;
-        box-shadow: none !important;
-    }
-
-    .class-title {
-        border-bottom-color: #0284c7 !important;
-        background: #f0f9ff !important;
-    }
-
-    .class-attributes, .class-methods {
-        border-bottom-color: #e2e8f0 !important;
-    }
-
-    /* Flujos en impresión */
-    .flow-step.highlighted {
-        border-color: #0284c7 !important;
-        background: #f0f9ff !important;
-        box-shadow: none !important;
-    }
-
-    .flow-step h4 {
-        color: #0f172a !important;
-    }
-
-    .flow-step p {
-        color: #475569 !important;
-    }
-
-    .step-num {
-        color: #0284c7 !important;
-        background: #e0f2fe !important;
-    }
-
-    .flow-arrow {
-        color: #94a3b8 !important;
-    }
-
-    .df-node {
-        background: #ffffff !important;
-        border-color: #cbd5e1 !important;
-        box-shadow: none !important;
-    }
-
-    .df-node.highlight {
-        border-color: #0284c7 !important;
-        background: #f0f9ff !important;
-        box-shadow: none !important;
-    }
-
-    .code-editor-mockup {
-        background: #f8fafc !important;
-        border-color: #cbd5e1 !important;
-    }
-
-    .editor-header {
-        border-bottom-color: #cbd5e1 !important;
-    }
-
-    .filename {
-        color: #475569 !important;
-    }
-
-    .lang-tag {
-        color: #6b21a8 !important;
-        background: #f3e8ff !important;
-    }
-
-    .code-editor-mockup code {
-        color: #0f172a !important;
-    }
-
-    .json-key { color: #0284c7 !important; }
-    .json-val { color: #b45309 !important; }
-
-    /* Comparativa */
-    .comparison-table th {
-        background: #f1f5f9 !important;
-        color: #0f172a !important;
-    }
-
-    .comparison-table tr.highlighted-row {
-        background: #f0f9ff !important;
-    }
-
-    .comparison-table tr.highlighted-row td {
-        color: #0f172a !important;
-        border-bottom-color: #bae6fd !important;
-    }
-
-    .badge-success {
-        background: #d1fae5 !important;
-        color: #065f46 !important;
-        border-color: #a7f3d0 !important;
-    }
-
-    .badge-warning {
-        background: #fef3c7 !important;
-        color: #92400e !important;
-        border-color: #fde68a !important;
-    }
-
-    .badge-danger {
-        background: #fee2e2 !important;
-        color: #991b1b !important;
-        border-color: #fca5a5 !important;
     }
 
     /* Demo en impresión (PDF) */
@@ -2184,36 +1993,21 @@ body.dark-theme .modal-backdrop {
     }
 
     .demo-panel.diagram-preview-panel {
-        background: #ffffff !important;
-        border: 1px solid #cbd5e1 !important;
+        background: var(--bg-dark-secondary) !important;
+        border: 1px solid var(--border-color) !important;
     }
 
     .uml-canvas {
-        background: #f8fafc !important;
-        border-color: #cbd5e1 !important;
-    }
-
-    .uml-class-card {
-        background: #ffffff !important;
-        border-color: #0284c7 !important;
-        box-shadow: none !important;
-    }
-
-    .class-card-header {
-        background: #f0f9ff !important;
-        border-bottom-color: #0284c7 !important;
-    }
-
-    .class-card-section {
-        border-bottom-color: #cbd5e1 !important;
+        background: var(--bg-dark-tertiary) !important;
+        border-color: var(--border-color) !important;
     }
 
     .demo-panel.output-panel {
-        border: 1px solid #cbd5e1 !important;
+        border: 1px solid var(--border-color) !important;
     }
 
     .output-content {
-        background: #f8fafc !important;
+        background: var(--bg-dark-tertiary) !important;
         height: 100% !important;
     }
 
@@ -2223,23 +2017,5 @@ body.dark-theme .modal-backdrop {
 
     .tab-pane#tab-java {
         display: block !important;
-    }
-
-    .tab-pane code {
-        color: #0f172a !important;
-    }
-
-    /* Conclusiones */
-    .c-card {
-        border-color: #cbd5e1 !important;
-        background: #ffffff !important;
-    }
-
-    .c-icon {
-        color: #0284c7 !important;
-    }
-
-    .slide-footer-questions h3 {
-        color: #0b2c5a !important;
     }
 }

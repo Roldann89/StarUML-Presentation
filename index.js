@@ -8,7 +8,7 @@ const initPresentationApp = () => {
     const state = {
         currentSlideIndex: 0,
         speakers: [
-            "Jorge Clreigues Malet (Ponente 1)",
+            "Jorge Clerigues Malet (Ponente 1)",
             "Nahuel Chosco Flores (Ponente 2)",
             "Brad Owen Valladares Quispe (Ponente 3)",
             "Jordi Barrachina Méndez (Ponente 4)",
@@ -45,7 +45,7 @@ const initPresentationApp = () => {
             targetTime: "2:00 min",
             speech: `
                 <p><strong>[Inicio y Bienvenida]</strong> Buenos días a todos y al profesorado. Bienvenidos a nuestro seminario sobre la herramienta <strong>StarUML</strong>, analizada bajo la perspectiva de la asignatura <strong>Desarrollo de Software Dirigido por Modelos (DSM)</strong>.</p>
-                <p>Mi nombre es <strong>Jorge Clreigues Malet</strong> y, junto con mis compañeros Nahuel, Brad, Jordi y Sergio, daremos un recorrido exhaustivo por la herramienta. No nos limitaremos a verla como un simple programa de dibujo, sino que analizaremos su rigor semántico en MDE, su formato JSON extensible, la ingeniería directa e inversa, y concluiremos con una demo en vivo y una valoración crítica de sus capacidades.</p>
+                <p>Mi nombre es <strong>Jorge Clerigues Malet</strong> y, junto con mis compañeros Nahuel, Brad, Jordi y Sergio, daremos un recorrido exhaustivo por la herramienta. No nos limitaremos a verla como un simple programa de dibujo, sino que analizaremos su rigor semántico en MDE, su formato JSON extensible, la ingeniería directa e inversa, y concluiremos con una demo en vivo y una valoración crítica de sus capacidades.</p>
                 <p>Empecemos por situar la herramienta a nivel comercial y técnico.</p>
             `,
             tip: "<ul><li>Presenta al grupo con un tono académico formal y pausado.</li><li>Destaca el título del trabajo enfocado en MDE (Model-Driven Engineering).</li></ul>"
@@ -123,24 +123,24 @@ const initPresentationApp = () => {
         },
         // Slide 8: Demo en Vivo
         {
-            speakerIndex: 3, // Jordi y Sergio exponen la demo juntos
-            targetTime: "4:00 min",
+            speakerIndex: 4, // Sergio expone la demo completa
+            targetTime: "2:00 min",
             speech: `
-                <p><strong>[Demo Interactiva]</strong> Pasemos a la demostración práctica. Con mi compañero Sergio, hemos integrado este simulador MDD reactivo directamente en la presentación.</p>
-                <p><strong>[Funcionamiento]</strong> En el panel izquierdo, podemos editar la clase (por ejemplo, modificando su nombre a 'Cliente' o agregando atributos y métodos con visibilidad pública o privada). El panel central simula el lienzo (*canvas*) de StarUML redibujando el diagrama UML con la notación formal. En el panel derecho, observen cómo se genera de forma reactiva el JSON del modelo <code>.mdj</code> y los correspondientes esqueletos de código fuente en Java, Python y C++.</p>
+                <p><strong>[Demo Interactiva]</strong> Hola a todos, soy <strong>Sergio Camacho Roig</strong>. Pasemos a la demostración práctica. Hemos integrado este simulador MDD reactivo directamente en la presentación para ver los conceptos en vivo.</p>
+                <p><strong>[Funcionamiento]</strong> En el panel izquierdo, podemos editar la clase (por ejemplo, modificando su nombre a 'Vehiculo' o agregando atributos y métodos con visibilidad pública o privada). El panel central simula el lienzo de StarUML redibujando el diagrama UML con la notación formal. Y en el panel derecho, observad cómo se genera de forma reactiva el JSON del modelo <code>.mdj</code> y los correspondientes esqueletos de código fuente en Java, Python y C++.</p>
                 <p>Esto ilustra perfectamente cómo los modelos impulsan la generación determinista de código (M2C) que hemos expuesto teóricamente.</p>
             `,
             tip: "<ul><li>¡Interactúa activamente con el simulador! Modifica la clase 'Usuario' a 'Vehiculo' o añade algún atributo como 'color: String'.</li><li>Muestra la pestaña JSON del metamodelo y luego las de Java/Python para que el público vea la generación reactiva en vivo.</li></ul>"
         },
         // Slide 9: Comparativa Técnica
         {
-            speakerIndex: 4,
+            speakerIndex: 3,
             targetTime: "2:00 min",
             speech: `
-                <p><strong>[Comparativa]</strong> Buenos días, soy <strong>Sergio Camacho Roig</strong>. Evaluando StarUML frente a otras herramientas del ecosistema MDE, podemos observar lo siguiente:</p>
+                <p><strong>[Comparativa]</strong> Gracias, Sergio. Hola de nuevo, soy <strong>Jordi Barrachina Méndez</strong>. Para ver dónde se sitúa StarUML en el mundo real, la hemos comparado con el resto de opciones que hay:</p>
                 <ul>
-                    <li><strong>Eclipse Papyrus:</strong> Es el estándar formal open-source, pero su pesada interfaz basada en Eclipse dificulta la adopción ágil en equipos pequeños.</li>
-                    <li><strong>Enterprise Architect y Visual Paradigm:</strong> Son potentes pero sus costes de licencia son sumamente elevados y sus interfaces están saturadas de funcionalidades redundantes.</li>
+                    <li><strong>Eclipse Papyrus:</strong> Es el estándar formal de la OMG, pero se apoya sobre Eclipse, siendo pesada, lenta y con una interfaz muy tosca para el laboratorio.</li>
+                    <li><strong>Enterprise Architect y Visual Paradigm:</strong> Son súper potentes, pero sus licencias son costosas y tienen demasiados menús que no se usan a diario.</li>
                     <li><strong>Draw.io:</strong> Es una mera herramienta de dibujo vectorial; carece de semántica de modelo y no valida sintaxis ni genera código.</li>
                 </ul>
                 <p>StarUML ofrece el mejor equilibrio: ligereza en Electron, un formato JSON abierto de fácil procesamiento y una UX muy moderna.</p>
@@ -265,7 +265,7 @@ const initPresentationApp = () => {
 
     function resetSpeakersToDefault() {
         state.speakers = [
-            "Jorge Clreigues Malet (Ponente 1)",
+            "Jorge Clerigues Malet (Ponente 1)",
             "Nahuel Chosco Flores (Ponente 2)",
             "Brad Owen Valladares Quispe (Ponente 3)",
             "Jordi Barrachina Méndez (Ponente 4)",
