@@ -342,7 +342,7 @@ const initPresentationApp = () => {
         const speakerIdx = parseInt(slide.getAttribute('data-speaker-index')) || 0;
         const speakerName = state.speakers[speakerIdx];
         
-        dom.speakerNameDisplay.textContent = speakerName;
+        if (dom.speakerNameDisplay) dom.speakerNameDisplay.textContent = speakerName;
         
         // Intentar actualizar el nombre del presentador en el panel de notas
         const notesSpeaker = document.getElementById('notes-speaker-name');
@@ -372,7 +372,7 @@ const initPresentationApp = () => {
     function startGlobalTimer() {
         if (state.timerRunning) return;
         state.timerRunning = true;
-        dom.toggleTimerBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+        if (dom.toggleTimerBtn) dom.toggleTimerBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
         
         state.timerInterval = setInterval(() => {
             if (state.totalTimeRemaining > 0) {
@@ -382,7 +382,7 @@ const initPresentationApp = () => {
             } else {
                 clearInterval(state.timerInterval);
                 state.timerRunning = false;
-                dom.toggleTimerBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
+                if (dom.toggleTimerBtn) dom.toggleTimerBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
             }
         }, 1000);
 
@@ -395,7 +395,7 @@ const initPresentationApp = () => {
 
     function pauseGlobalTimer() {
         state.timerRunning = false;
-        dom.toggleTimerBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
+        if (dom.toggleTimerBtn) dom.toggleTimerBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
         clearInterval(state.timerInterval);
         clearInterval(state.slideTimerInterval);
     }
@@ -465,11 +465,11 @@ const initPresentationApp = () => {
         if (isPresenter) {
             dom.appContainer.classList.remove('presenter-mode');
             dom.appContainer.classList.add('presentation-mode');
-            dom.presenterToggleBtn.classList.remove('active');
+            if (dom.presenterToggleBtn) dom.presenterToggleBtn.classList.remove('active');
         } else {
             dom.appContainer.classList.remove('presentation-mode');
             dom.appContainer.classList.add('presenter-mode');
-            dom.presenterToggleBtn.classList.add('active');
+            if (dom.presenterToggleBtn) dom.presenterToggleBtn.classList.add('active');
             
             // Iniciar temporizador al abrir por comodidad si no está corriendo
             if (!state.timerRunning) {
@@ -481,7 +481,7 @@ const initPresentationApp = () => {
     function closeNotes() {
         dom.appContainer.classList.remove('presenter-mode');
         dom.appContainer.classList.add('presentation-mode');
-        dom.presenterToggleBtn.classList.remove('active');
+        if (dom.presenterToggleBtn) dom.presenterToggleBtn.classList.remove('active');
     }
 
     // --- MODAL DE INTEGRANTES ---
@@ -887,13 +887,13 @@ const initPresentationApp = () => {
         dom.nextBtn.addEventListener('click', nextSlide);
         document.addEventListener('keydown', handleKeyDown);
 
-        // Timer
-        dom.toggleTimerBtn.addEventListener('click', toggleTimer);
-        dom.resetTimerBtn.addEventListener('click', resetTimer);
+        // Timer (si existen en el DOM)
+        if (dom.toggleTimerBtn) dom.toggleTimerBtn.addEventListener('click', toggleTimer);
+        if (dom.resetTimerBtn) dom.resetTimerBtn.addEventListener('click', resetTimer);
 
-        // Panel de Notas
-        dom.presenterToggleBtn.addEventListener('click', togglePresenterMode);
-        dom.closeNotesBtn.addEventListener('click', closeNotes);
+        // Panel de Notas (si existen en el DOM)
+        if (dom.presenterToggleBtn) dom.presenterToggleBtn.addEventListener('click', togglePresenterMode);
+        if (dom.closeNotesBtn) dom.closeNotesBtn.addEventListener('click', closeNotes);
 
         // Configuración de Integrantes
         dom.configNamesBtn.addEventListener('click', openModal);
