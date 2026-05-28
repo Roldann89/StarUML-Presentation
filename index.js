@@ -895,21 +895,25 @@ const initPresentationApp = () => {
         if (dom.presenterToggleBtn) dom.presenterToggleBtn.addEventListener('click', togglePresenterMode);
         if (dom.closeNotesBtn) dom.closeNotesBtn.addEventListener('click', closeNotes);
 
-        // Configuración de Integrantes
-        dom.configNamesBtn.addEventListener('click', openModal);
-        dom.closeModalBtn.addEventListener('click', closeModal);
-        dom.saveNamesBtn.addEventListener('click', saveSpeakers);
-        dom.resetNamesBtn.addEventListener('click', resetSpeakersToDefault);
+        // Configuración de Integrantes (si existen en el DOM)
+        if (dom.configNamesBtn) dom.configNamesBtn.addEventListener('click', openModal);
+        if (dom.closeModalBtn) dom.closeModalBtn.addEventListener('click', closeModal);
+        if (dom.saveNamesBtn) dom.saveNamesBtn.addEventListener('click', saveSpeakers);
+        if (dom.resetNamesBtn) dom.resetNamesBtn.addEventListener('click', resetSpeakersToDefault);
         
-        // Cerrar modal al hacer clic en el backdrop
-        dom.namesModal.addEventListener('click', (e) => {
-            if (e.target === dom.namesModal) closeModal();
-        });
+        // Cerrar modal al hacer clic en el backdrop (si existe)
+        if (dom.namesModal) {
+            dom.namesModal.addEventListener('click', (e) => {
+                if (e.target === dom.namesModal) closeModal();
+            });
+        }
 
-        // Impresión a PDF
-        dom.exportPdfBtn.addEventListener('click', () => {
-            window.print();
-        });
+        // Impresión a PDF (si existe)
+        if (dom.exportPdfBtn) {
+            dom.exportPdfBtn.addEventListener('click', () => {
+                window.print();
+            });
+        }
 
         // Alternancia de Tema Claro/Oscuro
         const themeToggleBtn = document.getElementById('theme-toggle-btn');
