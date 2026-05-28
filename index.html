@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StarUML en el Desarrollo Dirigido por Modelos (MDD) - Seminario ETSINF</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <!-- FontAwesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="index.css">
+</head>
+<body class="light-theme"> <!-- Por defecto tema académico claro y limpio -->
+
+    <!-- Contenedor Principal de la App -->
+    <div id="app-container" class="presentation-mode">
+        
+        <!-- Barra Superior (Controles Globales) -->
+        <header class="header-bar">
+            <div class="header-left">
+                <div class="logo">
+                    <span class="logo-icon"><i class="fa-solid fa-graduation-cap"></i></span>
+                    <span class="logo-text">Star<span>UML</span> <small class="mdd-tag">ETSINF - UPV</small></span>
+                </div>
+            </div>
+            
+            <div class="header-center">
+                <!-- Indicador de Ponente Actual -->
+                <div class="current-speaker-tag">
+                    <i class="fa-solid fa-microphone"></i> Ponente: <span id="current-speaker-name">Cargando...</span>
+                </div>
+                <!-- Temporizador Global -->
+                <div class="global-timer-display" id="global-timer" title="Tiempo restante (Límite: 20 min)">
+                    <i class="fa-regular fa-clock"></i> <span id="timer-minutes">20</span>:<span id="timer-seconds">00</span>
+                    <button id="toggle-timer-btn" class="timer-control-btn"><i class="fa-solid fa-play"></i></button>
+                    <button id="reset-timer-btn" class="timer-control-btn"><i class="fa-solid fa-arrow-rotate-left"></i></button>
+                </div>
+            </div>
+
+            <div class="header-right">
+                <button class="nav-action-btn" id="theme-toggle-btn" title="Alternar Tema Claro/Oscuro">
+                    <i class="fa-solid fa-moon"></i> Tema
+                </button>
+                <button class="nav-action-btn" id="config-names-btn" title="Configurar integrantes del grupo">
+                    <i class="fa-solid fa-users-gear"></i> Grupo
+                </button>
+                <button class="nav-action-btn" id="toggle-presenter-view-btn" title="Activar Modo Ponente">
+                    <i class="fa-solid fa-chalkboard-user"></i> Modo Notas
+                </button>
+                <button class="nav-action-btn primary-btn" id="export-pdf-btn" title="Exportar presentación a PDF para entrega">
+                    <i class="fa-solid fa-file-pdf"></i> PDF (Ctrl+P)
+                </button>
+            </div>
+        </header>
+
+        <!-- Área Principal de Diapositivas -->
+        <main class="presentation-workspace">
+            <div class="slides-container" id="slides-container">
+                
+                <!-- DIAPOSITIVA 1: Portada Académica -->
+                <section class="slide" id="slide-1" data-speaker-index="0" data-target-time="120">
+                    <div class="slide-background-glow"></div>
+                    <div class="slide-content cover-slide">
+                        <div class="badge">Seminario de Herramientas MDE</div>
+                        <h1 class="glow-text">StarUML: Modelado Semántico UML y Automatización Directa/Inversa</h1>
+                        <p class="subtitle">Análisis técnico de la herramienta en el desarrollo de software dirigido por modelos (MDD) y su formato extensible JSON</p>
+                        
+                        <div class="cover-footer">
+                            <div class="course-info">
+                                <span class="course-label">Asignatura</span>
+                                <span class="course-name">Desarrollo de Software Dirigido por Modelos (DSM)</span>
+                                <span class="university-tag">ETS de Ingeniería Informática (ETSINF) • UPV</span>
+                                <span class="date-tag" style="font-size: 11px; margin-top: 4px; color: var(--text-muted); font-family: var(--font-mono);"><i class="fa-regular fa-calendar"></i> 29 de mayo de 2026</span>
+                            </div>
+                            <div class="group-members-box">
+                                <span class="members-label">Equipo de Exposición:</span>
+                                <ul class="members-list" id="cover-members-list">
+                                    <li><i class="fa-solid fa-user-tie"></i> <span class="member-name-0">Jorge Clreigues Malet</span></li>
+                                    <li><i class="fa-solid fa-user-tie"></i> <span class="member-name-1">Nahuel Chosco Flores</span></li>
+                                    <li><i class="fa-solid fa-user-tie"></i> <span class="member-name-2">Brad Owen Valladares Quispe</span></li>
+                                    <li><i class="fa-solid fa-user-tie"></i> <span class="member-name-3">Jordi Barrachina Méndez</span></li>
+                                    <li><i class="fa-solid fa-user-tie"></i> <span class="member-name-4">Sergio Camacho Roig</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- DIAPOSITIVA 2: Resumen e Información Técnica -->
+                <section class="slide" id="slide-2" data-speaker-index="0" data-target-time="120">
+                    <div class="slide-content">
+                        <div class="slide-header">
+                            <span class="slide-number">02/10</span>
+                            <h2>Resumen e Información Técnica</h2>
+                        </div>
+                        <div class="grid-2-cols">
+                            <div class="col-left">
+                                <div class="academic-block">
+                                    <h3>Resumen del Propósito</h3>
+                                    <p class="lead-text">StarUML es un modelador semántico de software diseñado para construir y manipular modelos visuales estructurados bajo los estándares UML 2.x, SysML y ERD. Actúa como núcleo en flujos MDE al separar la definición semántica del diseño y habilitar la ingeniería de código.</p>
+                                </div>
+                                <ul class="feature-bullets">
+                                    <li>
+                                        <div class="bullet-icon"><i class="fa-solid fa-industry"></i></div>
+                                        <div>
+                                            <strong>Entidad Comercial:</strong> Desarrollado y comercializado por <strong>MKLab</strong>.
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="bullet-icon"><i class="fa-solid fa-desktop"></i></div>
+                                        <div>
+                                            <strong>Tecnología:</strong> Multiplataforma (basado en Electron/Node.js/HTML5) disponible para Windows, macOS y Linux.
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-right flex-center">
+                                <div class="visual-card glass academic-card">
+                                    <div class="card-header-bar">
+                                        <i class="fa-solid fa-circle-info"></i> Ficha Técnica Comercial
+                                    </div>
+                                    <div class="technical-specs-box">
+                                        <div class="spec-row">
+                                            <span class="spec-label">Sitio Web Oficial</span>
+                                            <a href="https://staruml.io/" target="_blank" class="spec-val">staruml.io <i class="fa-solid fa-up-right-from-square"></i></a>
+                                        </div>
+                                        <div class="spec-row">
+                                            <span class="spec-label">Tipo de Licencia</span>
+                                            <span class="spec-val">Comercial / Evaluación Gratuita</span>
+                                        </div>
+                                        <div class="spec-row">
+                                            <span class="spec-label">Restricciones Evaluación</span>
+                                            <span class="spec-val">Ilimitada en tiempo (Marca de agua ocasional)</span>
+                                        </div>
+                                        <div class="spec-row">
+                                            <span class="spec-label">Precio Licencia Personal</span>
+                                            <span class="spec-val font-bold">$99 USD (Pago único)</span>
+                                        </div>
+                                        <div class="spec-row">
+                                            <span class="spec-label">Ecosistema Extensiones</span>
+                                            <span class="spec-val">Abierto y comunitario (GitHub)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- DIAPOSITIVA 3: Descripción de la Herramienta: Modelo vs Diagrama -->
+                <section class="slide" id="slide-3" data-speaker-index="1" data-target-time="120">
+                    <div class="slide-content">
+                        <div class="slide-header">
+                            <span class="slide-number">03/10</span>
+                            <h2>Descripción: Modelado Semántico vs. Dibujo</h2>
+                        </div>
+                        <div class="grid-2-cols">
+                            <div class="col-left">
+                                <p class="lead-text">En el Desarrollo Dirigido por Modelos, un modelo es un elemento semántico con lógica de negocio y reglas bien definidas, no una simple ilustración vectorial.</p>
+                                <ul class="feature-bullets">
+                                    <li>
+                                        <div class="bullet-icon"><i class="fa-solid fa-brain"></i></div>
+                                        <div>
+                                            <strong>El Modelo (Semántico):</strong> Es la base de datos de elementos estructurada jerárquicamente en memoria. Guarda la lógica (ej: la relación de herencia entre <code>Cliente</code> y <code>Persona</code>).
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="bullet-icon"><i class="fa-solid fa-shapes"></i></div>
+                                        <div>
+                                            <strong>El Diagrama (Visualización):</strong> Es una vista bidimensional de una porción del modelo. Si borras un elemento del <em>diagrama</em>, este sigue existiendo en el <em>modelo</em>.
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="bullet-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                                        <div>
+                                            <strong>Validación Asíncrona:</strong> StarUML valida la sintaxis del modelo en segundo plano (ej: impide que una clase se herede a sí misma), asegurando la integridad lógica antes de generar código.
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="bullet-icon"><i class="fa-solid fa-diagram-project"></i></div>
+                                        <div>
+                                            <strong>Modelos y Diagramas:</strong> Soporta diagramas estructurales y de comportamiento de UML 2.x (como diagramas de Clases, Estados, Secuencia, Actividades y Casos de Uso), integrándolos bajo una misma raíz lógica en el modelo.
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-right flex-center">
+                                <div class="m1-m2-visual-box glass">
+                                    <div class="box-title"><i class="fa-solid fa-network-wired"></i> Arquitectura del Elemento</div>
+                                    <div class="comparison-dual-box">
+                                        <div class="comp-pane">
+                                            <h5>El Modelo (AST)</h5>
+                                            <div class="inner-code">
+                                                Class: Usuario<br>
+                                                └─ Attr: password<br>
+                                                └─ Operation: login()<br>
+                                                └─ Parent: Persona
+                                            </div>
+                                        </div>
+                                        <div class="comp-pane highlight-border">
+                                            <h5>El Diagrama (Vista)</h5>
+                                            <div class="diagram-mini-box">
+                                                <div class="uml-box-mini">Usuario</div>
+                                                <div class="arrow-up-mini">▲</div>
+                                                <div class="uml-box-mini">Persona</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- DIAPOSITIVA 4: Relación con Conceptos de Clase: Jerarquía MOF -->
+                <section class="slide" id="slide-4" data-speaker-index="1" data-target-time="120">
+                    <div class="slide-content">
+                        <div class="slide-header">
+                            <span class="slide-number">04/10</span>
+                            <h2>Relación con Conceptos: La Jerarquía MOF</h2>
+                        </div>
+                        <div class="grid-2-cols">
+                            <div class="col-left flex-center">
+                                <div class="mof-table-card glass">
+                                    <div class="mof-row m3">
+                                        <span class="mof-level">M3</span>
+                                        <span class="mof-title">Meta-metamodelo (MOF)</span>
+                                        <span class="mof-desc">Define conceptos para crear metamodelos (Clase, Asociación)</span>
+                                    </div>
+                                    <div class="mof-arrow-v"><i class="fa-solid fa-arrow-down"></i> <small>Conformidad</small></div>
+                                    <div class="mof-row m2 active">
+                                        <span class="mof-level">M2</span>
+                                        <span class="mof-title">Metamodelo (UML 2.x)</span>
+                                        <span class="mof-desc">Estructura semántica de UML implementada en StarUML</span>
+                                    </div>
+                                    <div class="mof-arrow-v"><i class="fa-solid fa-arrow-down"></i> <small>Conformidad</small></div>
+                                    <div class="mof-row m1">
+                                        <span class="mof-level">M1</span>
+                                        <span class="mof-title">Modelo (Proyecto .mdj)</span>
+                                        <span class="mof-desc">El diagrama de clases que diseña el desarrollador</span>
+                                    </div>
+                                    <div class="mof-arrow-v"><i class="fa-solid fa-arrow-down"></i> <small>Instanciación</small></div>
+                                    <div class="mof-row m0">
+                                        <span class="mof-level">M0</span>
+                                        <span class="mof-title">Instancia (Objetos de Ejecución)</span>
+                                        <span class="mof-desc">Código corriendo en JVM o Python (datos reales en memoria)</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-right">
+                                <p class="lead-text">StarUML se ubica estrictamente dentro del marco de ingeniería dirigido por modelos promovido por la **OMG (Object Management Group)**.</p>
+                                <ul class="feature-bullets">
+                                    <li>
+                                        <strong>Soporte Metamodelo M2:</strong> StarUML define de forma estricta sus menús y lógica en función del estándar UML a nivel M2. Esto permite que el modelo M1 creado respete la semántica teórica de la disciplina.
+                                    </li>
+                                    <li>
+                                        <strong>Conformidad Estricta:</strong> Cada nodo dibujado a nivel M1 (instancia de modelo) conforma de manera directa a la definición formal de los elementos descritos a nivel M2.
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- DIAPOSITIVA 5: El Formato de Modelo JSON (.mdj) -->
+                <section class="slide" id="slide-5" data-speaker-index="2" data-target-time="120">
+                    <div class="slide-content">
+                        <div class="slide-header">
+                            <span class="slide-number">05/10</span>
+                            <h2>El Formato del Modelo: El Archivo .mdj</h2>
+                        </div>
+                        <div class="grid-2-cols">
+                            <div class="col-left">
+                                <p class="lead-text">Frente al estándar formal XML de intercambio (XMI) de la OMG (habitualmente complejo y pesado), StarUML utiliza una alternativa de almacenamiento moderna basada en texto plano: **JSON** con extensión <code>.mdj</code>.</p>
+                                <ul class="feature-bullets">
+                                    <li>
+                                        <div class="bullet-icon"><i class="fa-solid fa-code"></i></div>
+                                        <div>
+                                            <strong>Sintaxis Legible:</strong> Almacenado como un árbol JSON anidado nativo, lo que permite su inspección directa mediante cualquier editor de texto o scripts.
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="bullet-icon"><i class="fa-solid fa-fingerprint"></i></div>
+                                        <div>
+                                            <strong>UUIDs para Trazabilidad:</strong> Cada elemento del modelo cuenta con una propiedad única `_id` alfanumérica, permitiendo referencias cruzadas y relaciones inequívocas.
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="bullet-icon"><i class="fa-solid fa-code-branch"></i></div>
+                                        <div>
+                                            <strong>Facilidad de Parsing (MDE):</strong> Facilita enormemente escribir traductores personalizados con pocas líneas de código en Node.js o Python sin requerir SDKs complejos de modelado.
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-right flex-center">
+                                <div class="code-editor-mockup">
+                                    <div class="editor-header">
+                                        <span class="filename">modelo.mdj</span>
+                                        <span class="lang-tag">JSON</span>
+                                    </div>
+                                    <pre><code>{
+  <span class="json-key">"_type"</span>: <span class="json-val">"UMLModel"</span>,
+  <span class="json-key">"_id"</span>: <span class="json-val">"AAAAAAFF+h6SjaM"</span>,
+  <span class="json-key">"name"</span>: <span class="json-val">"ModelosClase"</span>,
+  <span class="json-key">"ownedElements"</span>: [
+    {
+      <span class="json-key">"_type"</span>: <span class="json-val">"UMLClass"</span>,
+      <span class="json-key">"_id"</span>: <span class="json-val">"UMLClass_Persona"</span>,
+      <span class="json-key">"name"</span>: <span class="json-val">"Persona"</span>,
+      <span class="json-key">"attributes"</span>: [
+        {
+          <span class="json-key">"_type"</span>: <span class="json-val">"UMLAttribute"</span>,
+          <span class="json-key">"name"</span>: <span class="json-val">"nombre"</span>,
+          <span class="json-key">"type"</span>: <span class="json-val">"String"</span>
+        }
+      ]
+    }
+  ]
+}</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- DIAPOSITIVA 6: Transformación de Modelos: Model-to-Text (M2T/M2C) -->
+                <section class="slide" id="slide-6" data-speaker-index="2" data-target-time="120">
+                    <div class="slide-content">
+                        <div class="slide-header">
+                            <span class="slide-number">06/10</span>
+                            <h2>Transformación de Modelos: Directa (M2T)</h2>
+                        </div>
+                        <div class="grid-2-cols">
+                            <div class="col-left">
+                                <p class="lead-text">La ingeniería directa o generación de código (Model-to-Code) traduce la estructura lógica de los modelos en ficheros de texto plano ejecutables.</p>
+                                <ul class="feature-bullets">
+                                    <li>
+                                        <div class="bullet-icon"><i class="fa-solid fa-file-invoice"></i></div>
+                                        <div>
+                                            <strong>Generación Basada en Plantillas (M2T):</strong> El motor lee el AST (árbol de sintaxis) en JSON del archivo <code>.mdj</code>, y mediante un motor de plantillas (EJS/Mustache) genera el código de clases.
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="bullet-icon"><i class="fa-solid fa-arrow-rotate-left"></i></div>
+                                        <div>
+                                            <strong>Determinismo:</strong> A diferencia de la IA Generativa, la transformación de modelos clásica en MDD es <strong>100% determinista y reproducible</strong>; dadas las mismas entradas y transformaciones, la salida es idéntica.
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="bullet-icon"><i class="fa-solid fa-code"></i></div>
+                                        <div>
+                                            <strong>Lenguajes Soportados:</strong> Java, Python, C++, C#, PHP y JavaScript mediante plugins integrados en la aplicación.
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-right flex-center">
+                                <div class="diagram-flow-box glass academic-flow">
+                                    <div class="df-node"><i class="fa-solid fa-file-contract"></i> <span>Modelo M1 (.mdj)</span></div>
+                                    <div class="df-connector"><i class="fa-solid fa-arrows-spin"></i> <small>Regla de Mapeo Determinista</small></div>
+                                    <div class="df-node highlight"><i class="fa-solid fa-terminal"></i> <span>Motor de Plantillas M2T</span></div>
+                                    <div class="df-connector"><i class="fa-solid fa-arrow-down"></i> <small>Código Generado</small></div>
+                                    <div class="df-node"><i class="fa-solid fa-file-code"></i> <span>Código Fuente (.java, .py)</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- DIAPOSITIVA 7: Ingeniería Inversa y Sincronización (T2M) -->
+                <section class="slide" id="slide-7" data-speaker-index="3" data-target-time="120">
+                    <div class="slide-content">
+                        <div class="slide-header">
+                            <span class="slide-number">07/10</span>
+                            <h2>Ingeniería Inversa y Sincronización (T2M)</h2>
+                        </div>
+                        <div class="grid-2-cols">
+                            <div class="col-left flex-center">
+                                <div class="diagram-flow-box glass reverse-flow academic-flow">
+                                    <div class="df-node"><i class="fa-solid fa-file-code"></i> <span>Código Fuente (.java, .h)</span></div>
+                                    <div class="df-connector"><i class="fa-solid fa-magnifying-glass"></i> <small>Parser de Código (AST Extractor)</small></div>
+                                    <div class="df-node highlight"><i class="fa-solid fa-diagram-project"></i> <span>Generador de Modelo UML</span></div>
+                                    <div class="df-connector"><i class="fa-solid fa-pencil"></i> <small>Inyección en Metamodelo M2</small></div>
+                                    <div class="df-node"><i class="fa-solid fa-cubes"></i> <span>Esquema UML en StarUML</span></div>
+                                </div>
+                            </div>
+                            <div class="col-right">
+                                <p class="lead-text">La ingeniería inversa o transformación de Texto a Modelo (T2M) permite reconstruir modelos visuales a partir de código escrito a mano.</p>
+                                <ul class="feature-bullets">
+                                    <li>
+                                        <div class="bullet-icon"><i class="fa-solid fa-file-import"></i></div>
+                                        <div>
+                                            <strong>Extracción de AST:</strong> Los plugins analizan la sintaxis del código de entrada (ej: clases Java), identifican tipos de variables, modificadores de acceso, herencias y firmas de métodos, mapeándolos en el JSON del modelo.
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="bullet-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                                        <div>
+                                            <strong>Desafío de la Vista Visual:</strong> La reingeniería recupera la semántica del modelo, pero no las coordenadas visuales del diagrama, obligando al usuario a distribuir las cajas manualmente en el lienzo.
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="bullet-icon"><i class="fa-solid fa-arrows-left-right"></i></div>
+                                        <div>
+                                            <strong>Round-trip Engineering:</strong> La sincronización bidireccional continua (alinear cambios de código a modelo y viceversa de forma transparente) es parcial en StarUML y requiere cuidado manual.
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- DIAPOSITIVA 8: Demo Interactiva (Simulador MDD / Generador de Código) -->
+                <section class="slide" id="slide-8" data-speaker-index="3" data-target-time="240">
+                    <div class="slide-content demo-slide">
+                        <div class="slide-header">
+                            <span class="slide-number">08/10</span>
+                            <h2>DEMO: Modelado y Generación de Código en Vivo</h2>
+                        </div>
+                        
+                        <div class="demo-grid">
+                            <!-- Panel de Control (Modelador UML) -->
+                            <div class="demo-panel control-panel glass academic-panel">
+                                <h3><i class="fa-solid fa-diagram-project text-cyan"></i> Editor de Clase UML</h3>
+                                <div class="form-group">
+                                    <label for="input-class-name">Nombre de Clase</label>
+                                    <input type="text" id="input-class-name" value="Usuario" placeholder="Ej: Persona, Cliente">
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-section-title">
+                                        <label>Atributos</label>
+                                        <button class="add-item-btn" id="add-attribute-btn"><i class="fa-solid fa-plus"></i></button>
+                                    </div>
+                                    <div class="items-list-container" id="attributes-list">
+                                        <!-- Se llenan por JS -->
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-section-title">
+                                        <label>Métodos</label>
+                                        <button class="add-item-btn" id="add-method-btn"><i class="fa-solid fa-plus"></i></button>
+                                    </div>
+                                    <div class="items-list-container" id="methods-list">
+                                        <!-- Se llenan por JS -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Panel de Vista de Diagrama -->
+                            <div class="demo-panel diagram-preview-panel glass academic-panel">
+                                <h3><i class="fa-solid fa-eye text-purple"></i> Vista StarUML (Canvas)</h3>
+                                <div class="uml-canvas">
+                                    <div class="canvas-grid-bg"></div>
+                                    <div class="uml-class-card" id="uml-class-card">
+                                        <div class="class-card-header" id="card-class-name">Usuario</div>
+                                        <div class="class-card-section" id="card-attributes-list">
+                                            <!-- Se llenan por JS -->
+                                        </div>
+                                        <div class="class-card-section" id="card-methods-list">
+                                            <!-- Se llenan por JS -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Panel del Generador de Código -->
+                            <div class="demo-panel output-panel glass academic-panel">
+                                <div class="output-tabs">
+                                    <button class="tab-btn active" data-tab="tab-mdj"><i class="fa-solid fa-file-lines"></i> .mdj (JSON)</button>
+                                    <button class="tab-btn" data-tab="tab-java"><i class="fa-brands fa-java"></i> Java</button>
+                                    <button class="tab-btn" data-tab="tab-python"><i class="fa-brands fa-python"></i> Python</button>
+                                    <button class="tab-btn" data-tab="tab-cpp"><i class="fa-solid fa-code"></i> C++</button>
+                                </div>
+                                <div class="output-content">
+                                    <div class="tab-pane active" id="tab-mdj">
+                                        <pre><code id="output-mdj">Cargando modelo...</code></pre>
+                                    </div>
+                                    <div class="tab-pane" id="tab-java">
+                                        <pre><code id="output-java">Generando código...</code></pre>
+                                    </div>
+                                    <div class="tab-pane" id="tab-python">
+                                        <pre><code id="output-python">Generando código...</code></pre>
+                                    </div>
+                                    <div class="tab-pane" id="tab-cpp">
+                                        <pre><code id="output-cpp">Generando código...</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- DIAPOSITIVA 9: Comparativa Técnica con Alternativas MDE -->
+                <section class="slide" id="slide-9" data-speaker-index="4" data-target-time="120">
+                    <div class="slide-content">
+                        <div class="slide-header">
+                            <span class="slide-number">09/10</span>
+                            <h2>Comparativa Técnica de Herramientas MDE</h2>
+                        </div>
+                        <div class="comparison-table-wrapper">
+                            <table class="comparison-table glass academic-table">
+                                <thead>
+                                    <tr>
+                                        <th>Herramienta</th>
+                                        <th>Rigor MDD</th>
+                                        <th>Formatos de Intercambio</th>
+                                        <th>Extensibilidad</th>
+                                        <th>Curva e Interfaz</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="highlighted-row">
+                                        <td><strong>StarUML</strong></td>
+                                        <td><span class="badge badge-success">Alto</span> (Fuerte validación UML2)</td>
+                                        <td>JSON (<code>.mdj</code>) nativo / XML XMI por Plugin</td>
+                                        <td><span class="badge badge-success">Excelente</span> (API web Javascript estándar)</td>
+                                        <td>Muy intuitiva, rendimiento ágil</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Eclipse Papyrus</strong></td>
+                                        <td><span class="badge badge-success">Máximo</span> (Estándar formal UML2/OMG)</td>
+                                        <td>XMI Nativo de Eclipse (EMF/Ecore)</td>
+                                        <td><span class="badge badge-warning">Complejo</span> (Plugins Eclipse, Java, OSGi)</td>
+                                        <td>Muy compleja, rendimiento pesado</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Enterprise Architect</strong></td>
+                                        <td><span class="badge badge-success">Muy Alto</span> (Simulaciones y perfiles)</td>
+                                        <td>XMI de OMG estándar, bases de datos</td>
+                                        <td><span class="badge badge-warning">Medio</span> (APIs de automatización COM/.NET)</td>
+                                        <td>Saturada, curva muy pronunciada</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Visual Paradigm</strong></td>
+                                        <td><span class="badge badge-success">Alto</span> (Ingeniería de código y BD)</td>
+                                        <td>XMI de OMG, XML propietario</td>
+                                        <td><span class="badge badge-warning">Medio</span> (Plugins Java pesados)</td>
+                                        <td>Curva media, interfaz sobrecargada</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Draw.io / Lucidchart</strong></td>
+                                        <td><span class="badge badge-danger">Nulo</span> (Solo dibujo vectorial básico)</td>
+                                        <td>XML vectorial sin semántica de modelo</td>
+                                        <td><span class="badge badge-danger font-bold">Inexistente</span> (No interpreta metamodelos)</td>
+                                        <td>Extremadamente sencilla y rápida</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- DIAPOSITIVA 10: Valoración Personal y Conclusiones Críticas -->
+                <section class="slide" id="slide-10" data-speaker-index="4" data-target-time="120">
+                    <div class="slide-background-glow bottom-glow"></div>
+                    <div class="slide-content conclusion-slide">
+                        <div class="badge">Valoración Crítica y Conclusiones</div>
+                        <h2>Evaluación Académica de StarUML</h2>
+                        <p class="lead-text">Un balance de la experiencia de uso de la herramienta contrastada con la teoría de la asignatura.</p>
+                        
+                        <div class="conclusion-cards">
+                            <div class="c-card glass academic-card">
+                                <div class="c-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                                <h4>Valoración e Instalación</h4>
+                                <p>Instalación sencilla (Electron) y curva de aprendizaje muy baja. Ofrece una usabilidad y agilidad excelentes para modelado UML rápido frente a Eclipse Papyrus.</p>
+                            </div>
+                            <div class="c-card glass academic-card">
+                                <div class="c-icon"><i class="fa-solid fa-book-open"></i></div>
+                                <h4>Rol de la Asignatura</h4>
+                                <p>La teoría de DSM (niveles MOF, metamodelos M2 y árboles AST) ha sido clave para comprender la estructura semántica de la herramienta y sus capacidades de automatización.</p>
+                            </div>
+                            <div class="c-card glass academic-card">
+                                <div class="c-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                                <h4>Limitaciones Críticas</h4>
+                                <p>Carece de validación OCL nativa y transformaciones M2M (ATL/QVT) directas en el flujo. La persistencia en JSON propietario debilita la compatibilidad con el estándar XMI de OMG.</p>
+                            </div>
+                            <div class="c-card glass academic-card">
+                                <div class="c-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
+                                <h4>Recursos y Fuentes</h4>
+                                <p>Consultamos la documentación oficial (<code>docs.staruml.io</code>), la especificación UML 2.5 de la OMG, y repositorios de extensiones comunitarias en GitHub.</p>
+                            </div>
+                        </div>
+
+                        <div class="slide-footer-questions">
+                            <h3 class="glow-text">¿Preguntas o comentarios sobre el Seminario?</h3>
+                            <p>¡Muchas gracias por su atención de parte del equipo!</p>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+
+        <!-- Barra Inferior de Navegación de Diapositivas -->
+        <footer class="footer-controls">
+            <div class="footer-left">
+                <button class="nav-btn" id="prev-slide-btn" title="Diapositiva Anterior"><i class="fa-solid fa-chevron-left"></i> Anterior</button>
+            </div>
+            
+            <div class="footer-center">
+                <div class="slide-indicators" id="slide-indicators">
+                    <!-- Se genera por JS -->
+                </div>
+            </div>
+
+            <div class="footer-right">
+                <button class="nav-btn" id="next-slide-btn" title="Siguiente Diapositiva">Siguiente <i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+        </footer>
+
+        <!-- Panel Lateral: Notas del Ponente (Speaker Notes Panel) -->
+        <aside class="speaker-notes-panel" id="speaker-notes-panel">
+            <div class="panel-header">
+                <h3><i class="fa-solid fa-chalkboard-user text-cyan"></i> Panel del Ponente</h3>
+                <button id="close-notes-btn" class="close-panel-btn"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="panel-body">
+                <!-- Información de ponencia -->
+                <div class="notes-meta">
+                    <div class="meta-item">
+                        <span class="meta-label"><i class="fa-solid fa-user"></i> Presentador Asignado:</span>
+                        <strong class="meta-value text-cyan font-bold" id="notes-speaker-name">Cargando...</strong>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label"><i class="fa-solid fa-hourglass-half"></i> Tiempo para esta Diapositiva:</span>
+                        <strong class="meta-value font-bold font-mono" id="notes-target-time">Cargando...</strong>
+                    </div>
+                </div>
+
+                <hr class="panel-divider">
+
+                <!-- Notas del discurso -->
+                <div class="notes-speech-section">
+                    <h4><i class="fa-solid fa-comment-dots"></i> Guión de Exposición (Qué decir):</h4>
+                    <div class="speech-content-box" id="speech-notes-content">
+                        <!-- Se llena dinámicamente con JS -->
+                    </div>
+                </div>
+
+                <!-- Consejos de presentación -->
+                <div class="presentation-tips-box" id="presentation-tip-content">
+                    <!-- Se llena dinámicamente con JS -->
+                </div>
+            </div>
+        </aside>
+
+        <!-- Modal de Configuración de Integrantes -->
+        <div class="modal-backdrop" id="names-modal">
+            <div class="modal-card glass academic-card">
+                <div class="modal-header">
+                    <h3><i class="fa-solid fa-users-gear text-cyan"></i> Integrantes del Equipo</h3>
+                    <button class="close-modal-btn" id="close-modal-btn"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div class="modal-body">
+                    <p class="modal-intro">Modifica los nombres de los 5 integrantes del grupo para que aparezcan en la portada de la presentación y se asignen a los roles de ponente.</p>
+                    <div class="inputs-grid">
+                        <div class="input-field">
+                            <label for="input-member-0">Ponente 1 (Diapositivas 1 y 2):</label>
+                            <input type="text" id="input-member-0" value="Jorge Clreigues Malet">
+                        </div>
+                        <div class="input-field">
+                            <label for="input-member-1">Ponente 2 (Diapositivas 3 y 4):</label>
+                            <input type="text" id="input-member-1" value="Nahuel Chosco Flores">
+                        </div>
+                        <div class="input-field">
+                            <label for="input-member-2">Ponente 3 (Diapositivas 5 y 6):</label>
+                            <input type="text" id="input-member-2" value="Brad Owen Valladares Quispe">
+                        </div>
+                        <div class="input-field">
+                            <label for="input-member-3">Ponente 4 (Diapositivas 7 y 8):</label>
+                            <input type="text" id="input-member-3" value="Jordi Barrachina Méndez">
+                        </div>
+                        <div class="input-field">
+                            <label for="input-member-4">Ponente 5 (Diapositivas 8, 9 y 10):</label>
+                            <input type="text" id="input-member-4" value="Sergio Camacho Roig">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="modal-btn secondary" id="reset-names-btn">Valores por Defecto</button>
+                    <button class="modal-btn primary" id="save-names-btn">Aplicar Nombres</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Script de lógica de la aplicación -->
+    <script src="index.js"></script>
+</body>
+</html>
