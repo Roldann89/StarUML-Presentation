@@ -305,9 +305,9 @@ const initPresentationApp = () => {
             indicator.classList.toggle('active', idx === state.currentSlideIndex);
         });
 
-        // Controlar deshabilitación de botones
-        dom.prevBtn.disabled = state.currentSlideIndex === 0;
-        dom.nextBtn.disabled = state.currentSlideIndex === dom.slides.length - 1;
+        // Controlar deshabilitación de botones (si existen)
+        if (dom.prevBtn) dom.prevBtn.disabled = state.currentSlideIndex === 0;
+        if (dom.nextBtn) dom.nextBtn.disabled = state.currentSlideIndex === dom.slides.length - 1;
 
         // Actualizar textos y asignaciones del ponente
         updateCurrentSpeakerDisplay();
@@ -882,9 +882,9 @@ const initPresentationApp = () => {
 
     // --- ENLAZAR EVENTOS DE INTERFAZ ---
     function bindEvents() {
-        // Navegación
-        dom.prevBtn.addEventListener('click', prevSlide);
-        dom.nextBtn.addEventListener('click', nextSlide);
+        // Navegación (teclado, y botones si existen en el DOM)
+        if (dom.prevBtn) dom.prevBtn.addEventListener('click', prevSlide);
+        if (dom.nextBtn) dom.nextBtn.addEventListener('click', nextSlide);
         document.addEventListener('keydown', handleKeyDown);
 
         // Timer (si existen en el DOM)
